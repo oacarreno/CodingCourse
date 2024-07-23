@@ -1,0 +1,14 @@
+h1 {
+  background-color: black;
+  color: white;
+}
+
+h1:hover {
+  background-color: rgb(218, 101, 101);
+  color: rgb(0, 165, 8);
+}
+
+p {
+  color: black;
+  box-shadow: 5px 10px #888888;
+}

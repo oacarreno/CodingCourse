@@ -1,0 +1,110 @@
+:root {
+  --accent: #904faa;
+  --primary: #ab5d5d;
+  --secondary: #ffffff;
+  --tertiary: #1c913d;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #e5e5e5;
+  align-items: center;
+  display: flex;
+  line-height: 1.4;
+  margin: 0;
+}
+
+svg {
+  max-height: 100vh;
+  width: 100%;
+  overflow: visible;
+  shape-rendering: crispEdges;
+  vertical-align: middle;
+}
+
+/*  Guy  */
+
+#inner-guy {
+  transform-origin: 13px;
+}
+
+.left #inner-guy {
+  transform: scaleX(-1);
+}
+
+.walk #left_foot,
+.walk #right_foot {
+  animation: walk 0.2s infinite;
+}
+
+.walk #right_foot {
+  animation-delay: 0.1s;
+}
+
+.walk #head {
+  animation: walk 0.4s infinite;
+  position: relative;
+  z-index: 5;
+}
+
+#guy .accent,
+#face {
+  fill: var(--accent);
+}
+
+#guy .secondary {
+  fill: var(--secondary);
+}
+
+#guy .primary {
+  fill: var(--primary);
+}
+
+#guy .terciary {
+  fill: var(--terciary);
+}
+
+/*  Animations  */
+
+@keyframes walk {
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(0.7);
+  }
+}
+
+/*  Misc  */
+
+[hidden] {
+  display: none !important;
+}
+
+/*  Goal  */
+
+#inner-goal {
+  animation: pulse 2s infinite;
+  shape-rendering: auto;
+  transform-origin: 12px 12px;
+}
+
+.finish #inner-goal {
+  animation: none;
+}
+
+#inner-goal-finish {
+  transition: transform 0.5s;
+  transform-origin: 12px 12px;
+}
+
+.finish #inner-goal-finish {
+  transform: scale(150);
+}
