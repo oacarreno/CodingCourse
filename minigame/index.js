@@ -1,6 +1,7 @@
 import Body from "./src/body.js";
 import Guy from "./src/guy.js";
 import Goal from "./src/goal.js";
+import Obstacle from "./src/obstacle.js";
 import { getRandom } from "./src/math.js";
 import { WIDTH, HEIGHT } from "./src/dimensions.js";
 
@@ -16,6 +17,7 @@ class Scene extends Body {
     this.append(this.guy);
 
     this.goals = [];
+    this.obstacles = [];
 
     let goal_positions = [[getRandom(WIDTH), getRandom(HEIGHT)]];
 
@@ -24,6 +26,7 @@ class Scene extends Body {
       this.append(goal);
       this.goals.push(goal);
     }
+    this.createObstacle();
 
     /* setInterval(() => {
       this.createGoal();
@@ -35,6 +38,12 @@ class Scene extends Body {
     const goal = new Goal(getRandom(WIDTH), getRandom(HEIGHT));
     this.append(goal);
     this.goals.push(goal);
+  }
+
+  createObstacle() {
+    const obstacle = new Obstacle(getRandom(WIDTH), getRandom(HEIGHT));
+    this.append(obstacle);
+    this.obstacles.push(obstacle);
   }
 
   setBounds(body) {
@@ -52,6 +61,10 @@ class Scene extends Body {
     return this.goals.find((goal) => goal.overlaps(this.guy));
   }
 
+  blunder() {
+    return this.obstacles.find((obstacle) => obstacle.overlaps(this.guy));
+  }
+
   tick(scale) {
     this.guy.tick(scale);
 
@@ -67,6 +80,15 @@ class Scene extends Body {
       overlappedGoal.remove();
       this.guy.levelUp();
       this.createGoal();
+      this.createObstacle();
+    }
+    if (this.blunder()) {
+      let overlappedObstacle = this.blunder();
+      this.obstacles = this.obstacles.filter(
+        (obstacle) => obstacle !== overlappedObstacle
+      );
+      overlappedObstacle.remove();
+      this.guy.levelDown();
     }
   }
 }

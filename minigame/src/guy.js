@@ -30,10 +30,7 @@ export default class Guy extends Body {
     this.food = MAX_FOOD;
 
     setInterval(() => {
-      this.foodChange(-1.2);
-      console.log("");
-      console.log(this.food);
-      console.log(this.speed);
+      this.foodChange(-1);
     }, 50);
   }
 
@@ -99,5 +96,9 @@ export default class Guy extends Body {
   levelUp() {
     console.log("Level up!");
     this.food = 100;
+  }
+  levelDown() {
+    console.log("ouch");
+    this.foodChange(-25);
   }
 }
