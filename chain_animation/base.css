@@ -1,0 +1,10 @@
+* {
+  position: relative;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#game {
+  border: 1px solid black;
+  margin: 5px;
+}
