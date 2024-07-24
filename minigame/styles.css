@@ -108,3 +108,25 @@ svg {
 .finish #inner-goal-finish {
   transform: scale(150);
 }
+
+/*  Counters  */
+
+.counter {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Helvetica, sans-serif;
+  font-weight: bolder;
+  gap: 10px;
+}
+
+#stars {
+  top: 20px;
+  left: 20px;
+}
+
+#stars-svg {
+  width: 20px;
+  height: 20px;
+}

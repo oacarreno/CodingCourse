@@ -3,6 +3,7 @@ import Guy from "./src/guy.js";
 import Goal from "./src/goal.js";
 import Bar from "./src/bar.js";
 import Obstacle from "./src/obstacle.js";
+import Counter from "./src/counter.js";
 import { getRandom } from "./src/math.js";
 import { WIDTH, HEIGHT } from "./src/dimensions.js";
 
@@ -13,6 +14,8 @@ class Scene extends Body {
     super(document.getElementById("game"));
     this.game = game;
     this.levels = levels;
+
+    this.stars = new Counter(document.getElementById("star-counter"));
 
     this.guy = new Guy(500, 800);
     this.append(this.guy);
@@ -119,6 +122,7 @@ class Scene extends Body {
       this.goals = this.goals.filter((goal) => goal !== overlappedGoal);
       overlappedGoal.remove();
       this.guy.levelUp();
+      this.stars.value++;
       this.createGoal();
       this.createObstacle();
     }
