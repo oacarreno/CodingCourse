@@ -37,10 +37,11 @@ class Scene extends Body {
     this.obstacles = [];
     this.createObstacle();
 
+    // bar set up
     this.bars = [];
     let bar_positions = [
-      [200, 0, 50, 250],
-      [WIDTH - 200, HEIGHT - 250, 50, 250],
+      [200, 0, 100, 250],
+      [WIDTH - 200, HEIGHT - 250, 100, 250],
     ];
     for (const position of bar_positions) {
       let bar = new Bar(...position);
@@ -49,12 +50,18 @@ class Scene extends Body {
     }
   }
 
+  goalOverlapBar(goal) {
+    return this.bars.find((bar) => bar.overlaps(goal));
+  }
+
   createGoal() {
-    const goal = new Goal(getRandom(WIDTH), getRandom(HEIGHT));
+    let goal;
+    do {
+      goal = new Goal(getRandom(WIDTH), getRandom(HEIGHT));
+    } while (this.goalOverlapBar(goal));
     this.append(goal);
     this.goals.push(goal);
   }
-
   createObstacle() {
     const obstacle = new Obstacle(getRandom(WIDTH), getRandom(HEIGHT));
     this.append(obstacle);
