@@ -1,6 +1,7 @@
 import Body from "./src/body.js";
 import Guy from "./src/guy.js";
 import Goal from "./src/goal.js";
+import Bar from "./src/bar.js";
 import Obstacle from "./src/obstacle.js";
 import { getRandom } from "./src/math.js";
 import { WIDTH, HEIGHT } from "./src/dimensions.js";
@@ -16,9 +17,9 @@ class Scene extends Body {
     this.guy = new Guy(500, 800);
     this.append(this.guy);
 
-    this.goals = [];
-    this.obstacles = [];
+    // goal setup
 
+    this.goals = [];
     let goal_positions = [[getRandom(WIDTH), getRandom(HEIGHT)]];
 
     for (const position of goal_positions) {
@@ -26,12 +27,26 @@ class Scene extends Body {
       this.append(goal);
       this.goals.push(goal);
     }
-    this.createObstacle();
 
     /* setInterval(() => {
       this.createGoal();
     }, 5000);
     */
+
+    // obstacle setup
+    this.obstacles = [];
+    this.createObstacle();
+
+    this.bars = [];
+    let bar_positions = [
+      [200, 0, 50, 250],
+      [WIDTH - 200, HEIGHT - 250, 50, 250],
+    ];
+    for (const position of bar_positions) {
+      let bar = new Bar(...position);
+      this.bars.push(bar);
+      this.append(bar);
+    }
   }
 
   createGoal() {
@@ -53,6 +68,24 @@ class Scene extends Body {
     bounds.right = WIDTH - body.right;
     bounds.top = -body.top;
     bounds.bottom = HEIGHT - body.bottom + 1;
+
+    for (const bar of this.bars) {
+      if (bar.top < body.bottom && bar.bottom > body.top) {
+        if (bar.isRightOf(body)) {
+          bounds.right = Math.min(bounds.right, bar.left - body.right);
+        } else if (bar.isLeftOf(body)) {
+          bounds.left = Math.max(bounds.left, bar.right - body.left);
+        }
+      }
+
+      if (bar.left < body.right && bar.right > body.left) {
+        if (bar.isBelow(body)) {
+          bounds.bottom = Math.min(bounds.bottom, bar.top - body.bottom);
+        } else if (bar.isAbove(body)) {
+          bounds.top = Math.max(bounds.top, bar.bottom - body.top);
+        }
+      }
+    }
 
     return bounds;
   }

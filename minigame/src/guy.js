@@ -30,7 +30,7 @@ export default class Guy extends Body {
     this.food = MAX_FOOD;
 
     setInterval(() => {
-      this.foodChange(-1);
+      this.foodChange(-0.6);
     }, 50);
   }
 
