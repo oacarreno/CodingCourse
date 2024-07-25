@@ -17,6 +17,7 @@ class Scene extends Body {
     this.levels = levels;
 
     this.stars = new Counter(document.getElementById("stars-counter"));
+    this.stars.value = 30;
     this.blunders = new Counter(document.getElementById("blunders-counter"));
 
     this.guy = new Guy(500, 800);
@@ -48,6 +49,16 @@ class Scene extends Body {
     this.bars = [];
     let bar_positions = LEVELS[this.currentLevel];
     this.drawBars(bar_positions);
+    this.createGoal();
+  }
+
+  levelUp() {
+    this.guy.levelUp();
+    this.currentLevel++;
+    this.blunders.value = 0;
+    this.drawBars(LEVELS[this.currentLevel]);
+    this.goals.map((e) => e.remove());
+    this.goals = [];
     this.createGoal();
   }
 
@@ -132,7 +143,7 @@ class Scene extends Body {
       this.guy.levelUp();
       this.createGoal();
       this.createObstacle();
-      this.stars.value++;
+      this.stars.value--;
     }
     if (this.blunder()) {
       let overlappedObstacle = this.blunder();
@@ -142,11 +153,8 @@ class Scene extends Body {
       overlappedObstacle.remove();
       this.guy.levelDown();
       this.blunders.value++;
-      if (this.blunders.value == 10) {
-        this.guy.levelUp();
-        this.currentLevel++;
-        this.blunders.value = 0;
-        this.drawBars(LEVELS[this.currentLevel]);
+      if (this.blunders.value == 2) {
+        this.levelUp();
       }
     }
   }
