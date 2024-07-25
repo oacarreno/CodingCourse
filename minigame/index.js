@@ -6,6 +6,7 @@ import Obstacle from "./src/obstacle.js";
 import Counter from "./src/counter.js";
 import { getRandom } from "./src/math.js";
 import { WIDTH, HEIGHT } from "./src/dimensions.js";
+import { LEVELS } from "./src/levels.js";
 
 const levels = [];
 
@@ -20,6 +21,8 @@ class Scene extends Body {
 
     this.guy = new Guy(500, 800);
     this.append(this.guy);
+
+    this.currentLevel = 0;
 
     // goal setup
 
@@ -43,16 +46,19 @@ class Scene extends Body {
 
     // bar set up
     this.bars = [];
-    let bar_positions = [
-      [200, 0, 100, 250],
-      [WIDTH - 200, HEIGHT - 250, 100, 250],
-    ];
+    let bar_positions = LEVELS[this.currentLevel];
+    this.drawBars(bar_positions);
+    this.createGoal();
+  }
+
+  drawBars(bar_positions) {
+    this.bars.map((e) => e.remove());
+    this.bars = [];
     for (const position of bar_positions) {
       let bar = new Bar(...position);
       this.bars.push(bar);
       this.append(bar);
     }
-    this.createGoal();
   }
 
   goalOverlapBar(goal) {
@@ -136,6 +142,12 @@ class Scene extends Body {
       overlappedObstacle.remove();
       this.guy.levelDown();
       this.blunders.value++;
+      if (this.blunders.value == 10) {
+        this.guy.levelUp();
+        this.currentLevel++;
+        this.blunders.value = 0;
+        this.drawBars(LEVELS[this.currentLevel]);
+      }
     }
   }
 }
