@@ -10,6 +10,8 @@ import { LEVELS } from "./src/levels.js";
 
 const levels = [];
 
+const AMOUNT_TO_PASS_LEVEL = 10;
+
 class Scene extends Body {
   constructor(game, levels) {
     super(document.getElementById("game"));
@@ -47,14 +49,15 @@ class Scene extends Body {
 
     // bar set up
     this.bars = [];
-    let bar_positions = LEVELS[this.currentLevel];
-    this.drawBars(bar_positions);
+    this.drawBars(LEVELS[this.currentLevel]);
     this.createGoal();
   }
 
   levelUp() {
-    this.guy.levelUp();
     this.currentLevel++;
+    this.currentLevel = this.currentLevel % LEVELS.length;
+    console.log(this.currentLevel);
+    this.guy.levelUp();
     this.blunders.value = 0;
     this.drawBars(LEVELS[this.currentLevel]);
     this.goals.map((e) => e.remove());
@@ -153,7 +156,7 @@ class Scene extends Body {
       overlappedObstacle.remove();
       this.guy.levelDown();
       this.blunders.value++;
-      if (this.blunders.value == 2) {
+      if (this.blunders.value == AMOUNT_TO_PASS_LEVEL) {
         this.levelUp();
       }
     }
