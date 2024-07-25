@@ -23,6 +23,7 @@ export default class Guy extends Body {
     this.load(x, y);
     this.height = 48;
     this.width = 26;
+    this.opacity = 1;
     this.speed = MAX_SPEED;
     this.vx = 0;
     this.vy = 0;
@@ -38,6 +39,7 @@ export default class Guy extends Body {
     this.food += value;
     let newSpeed = Math.floor(MAX_SPEED * (this.food / MAX_FOOD));
     this.speed = Math.max(0, newSpeed);
+    this.opacity = (this.food / MAX_FOOD).toFixed(2);
   }
 
   tick(scale) {
