@@ -24,7 +24,7 @@ class Scene extends Body {
     // goal setup
 
     this.goals = [];
-    let goal_positions = [[getRandom(WIDTH), getRandom(HEIGHT)]];
+    let goal_positions = [];
 
     for (const position of goal_positions) {
       const goal = new Goal(...position);
@@ -52,6 +52,7 @@ class Scene extends Body {
       this.bars.push(bar);
       this.append(bar);
     }
+    this.createGoal();
   }
 
   goalOverlapBar(goal) {
@@ -123,7 +124,6 @@ class Scene extends Body {
       this.goals = this.goals.filter((goal) => goal !== overlappedGoal);
       overlappedGoal.remove();
       this.guy.levelUp();
-      this.stars.value++;
       this.createGoal();
       this.createObstacle();
     }
@@ -134,6 +134,7 @@ class Scene extends Body {
       );
       overlappedObstacle.remove();
       this.guy.levelDown();
+      this.stars.value++;
     }
   }
 }
