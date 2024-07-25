@@ -126,6 +126,7 @@ class Scene extends Body {
       this.guy.levelUp();
       this.createGoal();
       this.createObstacle();
+      this.stars.value++;
     }
     if (this.blunder()) {
       let overlappedObstacle = this.blunder();
@@ -134,7 +135,7 @@ class Scene extends Body {
       );
       overlappedObstacle.remove();
       this.guy.levelDown();
-      this.stars.value++;
+      this.blunders.value++;
     }
   }
 }
