@@ -15,7 +15,8 @@ class Scene extends Body {
     this.game = game;
     this.levels = levels;
 
-    this.stars = new Counter(document.getElementById("star-counter"));
+    this.stars = new Counter(document.getElementById("stars-counter"));
+    this.blunders = new Counter(document.getElementById("blunders-counter"));
 
     this.guy = new Guy(500, 800);
     this.append(this.guy);

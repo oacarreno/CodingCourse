@@ -126,7 +126,13 @@ svg {
   left: 20px;
 }
 
-#stars-svg {
+#blunders {
+  top: 50px;
+  left: 20px;
+}
+
+#stars-svg,
+#blunders-svg {
   width: 20px;
   height: 20px;
 }
